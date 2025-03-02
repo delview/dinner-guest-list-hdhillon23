@@ -36,3 +36,10 @@ while True:
         else:
             print("This given guest is already not in the list")
     elif boot == 'n':
+        addition = input("Would you like to add someone to the list? [y] or [n] ")
+        if addition == 'y':
+            create = input("Please enter the name of the guest youy would like to invite to the Taco Party: ")
+            guest.append(create)
+            print(f"{create} has been added to the list!")
+        elif addition == 'n':
+            break
