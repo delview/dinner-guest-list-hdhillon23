@@ -9,10 +9,28 @@ def get_yes_or_no(prompt):
             else:
                 print("Invalid input Please enter 'y' or 'n'. ")
 
+# Function to get a valid number input(only integers)
+def get_valid_number(prompt):
+    while True:
+        response = input(prompt).strip()
+        if response.isdigit() and int(response) > 0: # Checks if the response is a positive integer
+            return int(response)
+        else:
+            print("Invalid input. Please enter a valid positive number.")
+
+# Function to get a valid name input (only letters)
+def get_valid_name(prompt):
+    while True:
+        response = input(prompt).strip()
+        if response.isalpha(): # Checks if the response contains only alphabetic characters
+            return response.title() # Capitalizes the first letter of each word
+        else:
+            print("Invalid input. Please enter only letters.")
+
 # Main game loop
 while True:
     # Function that greets the user and ask for their name
-    user_name = input("What is your name? ").title().strip()
+    user_name = get_valid_name("What is your name? ") # get_valid_name ensures only letters
     print(f"Welcome {user_name}, this is a dinner inviting list program!")
     print("Lets start this Taco Party!!!")
 
@@ -20,26 +38,18 @@ while True:
     guest = []
 
     # Ask the user how many people they would like to add to the list
-    while True:
-        try:
-            num_people = int(input(f"{user_name} how many people would you like to invite (number only)? "))
-            if num_people > 0:
-                break
-            else:
-                print("Please enter a number greater than 0.")
-        except ValueError:
-            print("Invalid input. Please enter a whole number.")
-
+    num_people = get_valid_number(f"{user_name}, how many people would you like to invite? ") # get_valid_number ensure a valid integer
+    
     # Loop that runs until the num_people that you invited in the list are over
-    for num in range(num_people):
-        guest_name = input("Whats the name of the guest you want to invite? ")
+    for _ in range(num_people):
+        guest_name = get_valid_name("Whats the name of the guest you want to invite? ") # get_valid_name ensures only letters
         guest.append(guest_name)
         print(f"{guest_name} has been added!")
 
     # Print invitation messages
-        print(f"Here is an invitation message from {user_name} for {guest_name}: ")
-        for guest_name in guest:
-            print(f"Welcome {guest_name} you have been invited to {user_name}'s dinner party")
+    print(f"\nHere are your invitation messages from {user_name}: ")
+    for guest_name in guest:
+        print(f"🎉 {guest_name}, you are invited to {user_name}'s Taco Party! 🎉")
 
     # Modify the guest list
     while True:
@@ -48,7 +58,7 @@ while True:
 
         # Remove a guest from the list
         if modify_choice == "remove":
-            eliminate = input("Please enter the name of the you want to kick out of the Taco Party: ")
+            eliminate = input("Please enter the name of the guest you want to kick out of the Taco Party: ")
             if eliminate in guest:
                 guest.remove(eliminate)
                 print(f"{eliminate} has been removed from the list for the Taco Party!")
@@ -61,7 +71,7 @@ while True:
             if old_name in guest:
                 new_name = input("Enter the new guest's name: ").strip().title()
                 guest[guest.index(old_name)] = new_name
-                print(f"{old_name} is not in the list.")
+                print(f"{old_name} has been replaced with {new_name}!")
             else:
                 print(f"{old_name} is not in the list.")
 
